@@ -1,0 +1,233 @@
+/* 全局按钮样式统一 */
+
+/* ===== Element Plus 按钮主题覆盖 ===== */
+
+/* 主要按钮 - 使用品牌橙色渐变 */
+.el-button--primary {
+  background: var(--btn-primary-gradient) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.el-button--primary:hover {
+  background: var(--btn-primary-gradient-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.el-button--primary:active {
+  transform: translateY(0);
+}
+
+/* 成功按钮 - 绿色渐变 */
+.el-button--success {
+  background: var(--btn-success-gradient) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.el-button--success:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
+}
+
+/* 信息按钮 - 蓝色渐变 */
+.el-button--info {
+  background: var(--btn-info-gradient) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.el-button--info:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 119, 255, 0.3);
+}
+
+/* 警告按钮 */
+.el-button--warning {
+  background: var(--color-warning) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.el-button--warning:hover {
+  opacity: 0.9;
+}
+
+/* 危险按钮 */
+.el-button--danger {
+  background: var(--color-error) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.el-button--danger:hover {
+  opacity: 0.9;
+}
+
+/* 默认按钮 */
+.el-button--default {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  transition: all 0.3s ease;
+}
+
+.el-button--default:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+/* 文本按钮 */
+.el-button.is-text {
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.el-button.is-text:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+/* 链接按钮 */
+.el-button.is-link {
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.el-button.is-link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ===== 自定义按钮类 ===== */
+
+/* 渐变主按钮 */
+.btn-gradient-primary {
+  background: var(--btn-primary-gradient);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient-primary:hover {
+  background: var(--btn-primary-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+}
+
+/* 渐变成功按钮 */
+.btn-gradient-success {
+  background: var(--btn-success-gradient);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient-success:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(82, 196, 26, 0.3);
+}
+
+/* 渐变信息按钮 */
+.btn-gradient-info {
+  background: var(--btn-info-gradient);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient-info:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(22, 119, 255, 0.3);
+}
+
+/* 渐变紫色按钮 */
+.btn-gradient-purple {
+  background: var(--btn-purple-gradient);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient-purple:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(114, 46, 209, 0.3);
+}
+
+/* 轮廓按钮 */
+.btn-outline-primary {
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 8px 22px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* 小尺寸按钮 */
+.btn-sm {
+  padding: 6px 16px;
+  font-size: var(--font-size-sm);
+}
+
+/* 大尺寸按钮 */
+.btn-lg {
+  padding: 14px 32px;
+  font-size: var(--font-size-lg);
+}
+
+/* 圆角按钮 */
+.btn-round {
+  border-radius: 50px;
+}
+
+/* 禁用状态 */
+.btn-gradient-primary:disabled,
+.btn-gradient-success:disabled,
+.btn-gradient-info:disabled,
+.btn-gradient-purple:disabled,
+.btn-outline-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

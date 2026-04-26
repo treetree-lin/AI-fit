@@ -1,0 +1,19 @@
+# Dependencies
+**/node_modules/
+
+# Build outputs
+**/target/
+**/dist/
+**/build/
+
+# IDE
+.idea/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

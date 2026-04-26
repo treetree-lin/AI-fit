@@ -1,0 +1,136 @@
+/* 全局主题变量 - Light(白蓝) / Dark(深蓝) */
+
+:root {
+  /* ===== 主色调 ===== */
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #2563eb;
+  --color-primary-bg: rgba(59, 130, 246, 0.08);
+  --color-primary-hover: #4f8ef7;
+
+  /* ===== 辅助色 ===== */
+  --color-success: #52c41a;
+  --color-success-light: #73d13d;
+  --color-warning: #faad14;
+  --color-error: #f5222d;
+  --color-info: #3b82f6;
+  --color-info-light: #60a5fa;
+
+  /* ===== 背景色（亮色模式） ===== */
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-header: #ffffff;
+  --bg-input: #f1f5f9;
+  --bg-tag: #eff6ff;
+  --bg-hover: rgba(59, 130, 246, 0.06);
+  --bg-banner: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
+
+  /* ===== 按钮渐变 ===== */
+  --btn-primary-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --btn-primary-gradient-hover: linear-gradient(135deg, #4f8ef7 0%, #74b3fb 100%);
+  --btn-success-gradient: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  --btn-info-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --btn-purple-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+
+  /* ===== 文本色（亮色模式 - banner上文字用白色，页面文字用深色） ===== */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+  --text-banner-desc: #f1f5f9;
+
+  /* ===== 边框色 ===== */
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+
+  /* ===== 阴影 ===== */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --shadow-card: var(--shadow-md);
+  --shadow-hover: var(--shadow-lg);
+
+  /* ===== 字体大小 ===== */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 28px;
+  --font-size-5xl: 36px;
+
+  /* ===== 行高 ===== */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.8;
+
+  /* ===== 圆角 ===== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+}
+
+html.dark {
+  /* ===== 主色调（暗色模式） ===== */
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #2563eb;
+  --color-primary-bg: rgba(59, 130, 246, 0.15);
+  --color-primary-hover: #4f8ef7;
+
+  /* ===== 辅助色（暗色模式） ===== */
+  --color-success: #52c41a;
+  --color-success-light: #73d13d;
+  --color-warning: #faad14;
+  --color-error: #f5222d;
+  --color-info: #3b82f6;
+  --color-info-light: #60a5fa;
+
+  /* ===== 背景色（暗色模式） ===== */
+  --bg-page: #0b1121;
+  --bg-card: #151c2e;
+  --bg-sidebar: #0f172a;
+  --bg-header: #0f172a;
+  --bg-input: #1e293b;
+  --bg-tag: #1e293b;
+  --bg-hover: rgba(59, 130, 246, 0.1);
+  --bg-banner: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e1b4b 100%);
+
+  /* ===== 按钮渐变（暗色模式） ===== */
+  --btn-primary-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --btn-primary-gradient-hover: linear-gradient(135deg, #4f8ef7 0%, #74b3fb 100%);
+  --btn-success-gradient: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  --btn-info-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --btn-purple-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+
+  /* ===== 文本色（暗色模式 - 高对比度） ===== */
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+  --text-banner-desc: #e2e8f0;
+
+  /* ===== 边框色（暗色模式） ===== */
+  --border-color: #1e293b;
+  --border-light: #334155;
+
+  /* ===== 阴影（暗色模式） ===== */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+  --shadow-card: var(--shadow-md);
+  --shadow-hover: var(--shadow-lg);
+}
+
+html.dark body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}

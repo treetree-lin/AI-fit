@@ -1,0 +1,397 @@
+
+### =====================================================
+### FIT 健身项目完整测试文件
+### 使用方法：在 IDEA 中打开此文件，点击 ▶️ 运行请求
+### =====================================================
+
+### 环境变量设置
+@baseUrl = http://localhost:8080
+@token =eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOiIzNyIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzc2OTM2OTA1LCJleHAiOjE3NzcwMjMzMDV9.-OrPcCDitzh-bhei_E9vXvXUJ5wTRzDqBTCiEB3drxM
+@userId = 37
+
+### =====================================================
+### 1. 健康检查（无需认证）
+### =====================================================
+
+### 测试后端是否启动
+GET {{baseUrl}}/actuator/health
+
+### =====================================================
+### 2. 用户认证接口
+### =====================================================
+
+### 用户注册
+# @name register
+POST {{baseUrl}}/api/users/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "123456",
+  "age": 25,
+  "gender": "男",
+  "height": 175,
+  "weight": 70,
+  "goal": "增肌",
+  "level": "BEGINNER",
+  "equipment": ["哑铃","杠铃"],
+  "injuryHistory": ["无"],
+  "avatarUrl": ""
+}
+
+### 用户登录（获取 Token）
+# @name login
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "123456"
+}
+
+### 管理员注册
+# @name registerAdmin
+POST {{baseUrl}}/api/users/register-admin
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "age": 30,
+  "gender": "MALE",
+  "height": 180,
+  "weight": 75,
+  "goal": "保持",
+  "level": "ADVANCED",
+  "equipment": ["哑铃","杠铃","跑步机"],
+  "injuryHistory":["无"],
+  "avatarUrl": ""
+}
+
+### 管理员登录
+# @name adminLogin
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### =====================================================
+### 3. 需要认证的接口（使用上面的 Token）
+### =====================================================
+
+### 获取当前登录用户的画像信息（需要登录）
+# @name loginForProfile
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "123456"
+}
+
+> {%
+    // IDEA HTTP Client 响应体解析
+    var body = response.body;
+    
+    // 调试：输出响应结构
+    console.log("=== Login Response Debug ===");
+    console.log("Body type: " + typeof body);
+    console.log("Has 'data' field: " + (body.hasOwnProperty ? body.hasOwnProperty('data') : ('data' in body)));
+    console.log("Has 'token' field: " + (body.hasOwnProperty ? body.hasOwnProperty('token') : ('token' in body)));
+    
+    // 尝试提取 token
+    var token = null;
+    var userId = null;
+    
+    if (body.data && body.data.token) {
+        // ApiResponse 包装结构
+        token = body.data.token;
+        userId = body.data.userId;
+        console.log("✅ Extracted from body.data");
+    } else if (body.token) {
+        // 直接返回结构
+        token = body.token;
+        userId = body.userId;
+        console.log("✅ Extracted from body directly");
+    }
+    
+    if (token) {
+        client.global.set("token", token);
+        client.global.set("userId", String(userId));
+        console.log("✅ Token saved: " + token.substring(0, 30) + "...");
+        console.log("✅ UserId saved: " + userId);
+        console.log("===========================");
+    } else {
+        console.error("❌ Failed to extract token!");
+        console.error("Response: " + JSON.stringify(body, null, 2));
+        console.error("===========================");
+    }
+%}
+
+### 使用新获取的 token 访问
+# @name testProfile
+GET {{baseUrl}}/api/user/profile/me
+Authorization: Bearer {{token}}
+
+### ⚠️ 如果上面仍然 401，请手动替换下面的 token 进行测试
+### 将 YOUR_TOKEN_HERE 替换为登录响应中的完整 token
+GET {{baseUrl}}/api/user/profile/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjQwIiwic3ViIjoidGVzdHVzZXIiLCJpYXQiOjE3NzY5MzY2NTYsImV4cCI6MTc3NzAyMzA1Nn0.GpX0oYP2-pDHZ_S3WZirjJ6gWripg1jhS10P84n5I8c
+
+> {%n    console.log("=== Request Debug ===");
+    var tokenValue = client.global.get("token");
+    var userIdValue = client.global.get("userId");
+    
+    console.log("Token variable: " + (tokenValue ? tokenValue.substring(0, 30) + "..." : "NULL/EMPTY"));
+    console.log("UserId variable: " + userIdValue);
+    console.log("Response status: " + response.status);
+    
+    if (response.status === 401) {
+        console.error("❌ 401 Unauthorized - Token 未正确传递");
+        console.error("💡 可能原因：");
+        console.error("   1. Authorization 头未被发送");
+        console.error("   2. Token 格式错误");
+        console.error("   3. 过滤器逻辑问题");
+    } else if (response.status === 200) {
+        console.log("✅ 成功获取用户信息！");
+    }
+    console.log("===========================");
+%}
+
+### 更新用户资料
+PUT {{baseUrl}}/api/user/profile/update
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "age": 26,
+  "weight": 72,
+  "goal": "减脂"
+}
+
+### 上传头像
+POST {{baseUrl}}/api/user/avatar/upload
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="avatar.jpg"
+Content-Type: image/jpeg
+
+< ./test-avatar.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### =====================================================
+### 4. 健身教程模块
+### =====================================================
+
+### 获取所有教程
+GET {{baseUrl}}/api/workouts
+Authorization: Bearer {{token}}
+
+### 获取教程详情
+GET {{baseUrl}}/api/workouts/1
+Authorization: Bearer {{token}}
+
+### 按难度筛选
+GET {{baseUrl}}/api/workouts/difficulty/BEGINNER
+Authorization: Bearer {{token}}
+
+### 按目标肌群筛选（方式1：URL 编码）
+### "胸部" 的 URL 编码是 %E8%83%B8%E9%83%A8
+GET {{baseUrl}}/api/workouts/target/%E8%83%B8%E9%83%A8
+Authorization: Bearer {{token}}
+
+### 按目标肌群筛选（方式2：使用英文值，推荐）
+GET {{baseUrl}}/api/workouts/target/CHEST
+Authorization: Bearer {{token}}
+
+### 按目标肌群筛选（方式3：直接使用中文，某些客户端可能不支持）
+# GET {{baseUrl}}/api/workouts/target/胸部
+# Authorization: Bearer {{token}}
+### 创建教程（管理员）
+POST {{baseUrl}}/api/workouts?adminId={{userId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "测试教程",
+  "description": "这是一个测试教程",
+  "difficulty": "BEGINNER",
+  "targetMuscle": "胸部",
+  "duration": 30,
+  "calories": 200,
+  "coverUrl": "",
+  "videoUrl": ""
+}
+
+### 获取评论列表
+GET {{baseUrl}}/api/workouts/comments/1
+Authorization: Bearer {{token}}
+
+### 添加评论
+POST {{baseUrl}}/api/workouts/comments?userId={{userId}}&username=admin&workoutId=1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "content": "很好的教程！"
+}
+
+### 点赞评论
+POST {{baseUrl}}/api/workouts/comments/1/like?userId={{userId}}
+Authorization: Bearer {{token}}
+
+### 添加收藏
+POST {{baseUrl}}/api/workouts/favorites/1?userId={{userId}}
+Authorization: Bearer {{token}}
+
+### 检查是否收藏
+GET {{baseUrl}}/api/workouts/favorites/1/check?userId={{userId}}
+Authorization: Bearer {{token}}
+
+### 获取用户收藏
+GET {{baseUrl}}/api/workouts/favorites/user/{{userId}}
+Authorization: Bearer {{token}}
+
+### =====================================================
+### 5. 运动记录模块
+### =====================================================
+
+### 打卡签到
+POST {{baseUrl}}/api/records/checkin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": {{userId}},
+  "workoutId": 1,
+  "duration": 30,
+  "calories": 200,
+  "notes": "完成训练"
+}
+
+### 获取用户记录
+GET {{baseUrl}}/api/records/user/{{userId}}
+Authorization: Bearer {{token}}
+
+### 按日期范围查询
+GET {{baseUrl}}/api/records/user/{{userId}}/date-range?startDate=2026-04-01&endDate=2026-04-30
+Authorization: Bearer {{token}}
+
+### 获取月度统计
+GET {{baseUrl}}/api/records/stats/monthly/{{userId}}?year=2026&month=4
+Authorization: Bearer {{token}}
+
+### 获取总览统计
+GET {{baseUrl}}/api/records/stats/overview/{{userId}}
+Authorization: Bearer {{token}}
+
+### 获取近7天统计
+GET {{baseUrl}}/api/records/stats/last-7days/{{userId}}
+Authorization: Bearer {{token}}
+
+### =====================================================
+### 6. 推荐系统模块
+### =====================================================
+
+### 获取综合推荐
+GET {{baseUrl}}/api/v1/recommendations?userId={{userId}}&topN=10
+Authorization: Bearer {{token}}
+
+### 基于规则的推荐
+GET {{baseUrl}}/api/v1/recommendations/rule?userId={{userId}}&topN=10
+Authorization: Bearer {{token}}
+
+### 协同过滤推荐
+GET {{baseUrl}}/api/v1/recommendations/cf?userId={{userId}}&topN=10
+Authorization: Bearer {{token}}
+
+### =====================================================
+### 7. 知识库模块
+### =====================================================
+
+### 获取可访问文件
+GET {{baseUrl}}/api/v1/documents/accessible
+Authorization: Bearer {{token}}
+
+### 获取已上传文件
+GET {{baseUrl}}/api/v1/documents/uploads
+Authorization: Bearer {{token}}
+
+### 删除文档
+DELETE {{baseUrl}}/api/v1/documents/test-md5-value
+Authorization: Bearer {{token}}
+
+### 预览文件
+GET {{baseUrl}}/api/v1/documents/preview?fileName=test.pdf
+Authorization: Bearer {{token}}
+
+### 下载文件
+GET {{baseUrl}}/api/v1/documents/download?fileName=test.pdf
+Authorization: Bearer {{token}}
+
+### 获取支持的文件类型
+GET {{baseUrl}}/api/upload/supported-types
+Authorization: Bearer {{token}}
+
+### 获取上传状态
+GET {{baseUrl}}/api/upload/status?file_md5=test-md5
+Authorization: Bearer {{token}}
+
+### =====================================================
+### 8. AI 聊天模块
+### =====================================================
+
+### 获取对话历史
+GET {{baseUrl}}/api/v1/users/conversation
+Authorization: Bearer {{token}}
+
+### 获取 WebSocket Token
+GET {{baseUrl}}/api/v1/chat/websocket-token
+Authorization: Bearer {{token}}
+
+### 测试 Ollama 连接（直接调用 Ollama API）
+POST http://localhost:11434/api/generate
+Content-Type: application/json
+
+{
+  "model": "deepseek-r1:8b",
+  "prompt": "你好，请简单介绍一下自己",
+  "stream": false
+}
+
+### =====================================================
+### 9. 通用上传模块
+### =====================================================
+
+### 上传图片
+POST {{baseUrl}}/api/common/upload/image
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test-image.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 上传视频（最大 100MB）
+POST {{baseUrl}}/api/common/upload/video
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="test.mp4"
+Content-Type: video/mp4
+
+< ./test-video.mp4
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 注意：如果视频超过 100MB，将返回 400 错误：
+### HTTP/1.1 400 Bad Request
+### {"code": 400, "message": "视频文件过大，不能超过 100MB，当前大小：xxx MB", "data": null}

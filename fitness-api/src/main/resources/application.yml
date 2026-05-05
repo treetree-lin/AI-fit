@@ -20,8 +20,8 @@ spring:
   rabbitmq:
     host: 192.168.56.101
     port: 5672
-    username: lin
-    password: lin123123
+    username:
+    password:
     virtual-host: /
     listener:
       simple:
@@ -49,7 +49,7 @@ spring:
 
 # JWT 配置
 jwt:
-  secret-key: bGluZml0bmVzc19haS1qd3Qtc2VjcmV0LWtleS0yMDI2
+  secret-key: 
   expiration-time: 86400000
 
 # 服务端口
@@ -59,8 +59,8 @@ server:
 # MinIO 配置
 minio:
   endpoint: http://192.168.56.101:9000
-  access-key: HFAUYVIW08T1KH5BQ1U2
-  secret-key: mZzSnTDBCj6ZO5+LtLyszQjYPfTGieBbLajc+rxR
+  access-key:
+  secret-key: 
   bucket-name: fitness-files
   image-bucket-name: fitness-images
   video-bucket-name: fitness-videos
@@ -71,7 +71,7 @@ minio:
 embedding:
   api:
     url: https://dashscope.aliyuncs.com/compatible-mode/v1
-    key: sk-b91e0f47dfd749c18a43e645fa03bf88
+    key: 
     model: text-embedding-v4
     batch-size: 10
     dimension: 2048
@@ -127,7 +127,7 @@ elasticsearch:
   port: 9200
   scheme: http
   username: elastic
-  password: 9Y=2=31NXr-F7WZ6p6dV
+  password: 
 
 # ============================================
 # 日志配置

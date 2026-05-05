@@ -12,7 +12,7 @@ spring:
 embedding:
   api:
     url: https://dashscope.aliyuncs.com/compatible-mode/v1
-    key: sk-b91e0f47dfd749c18a43e645fa03bf88
+    key:
     model: text-embedding-v4
     batch-size: 10
     dimension: 2048
@@ -58,7 +58,7 @@ elasticsearch:
   port: 9200
   scheme: http
   username: elastic
-  password: 9Y=2=31NXr-F7WZ6p6dV
+  password: 
 
 # 日志配置
 logging:
@@ -81,7 +81,7 @@ llm:
   api:
     url: http://localhost:11434/v1  # 本地是 http://localhost:11434/v1 官方：https://api.deepseek.com/v1
     model: deepseek-r1:8b  # 本地: deepseek-r1:7b, 官方: deepseek-chat
-    key:   # DeepSeek API Key 如果是本地就为空  sk-82747515bb794295ad2a115a55a09cc7
+    key:   # DeepSeek API Key 如果是本地就为空  
 
 
 # AI 提示词规则
